@@ -20,6 +20,11 @@ public class Player : MonoBehaviour
     Vector2 direcaoVertical;
     Vector2 direcaoAndar;
 
+    Vector2 direcaoMirar;
+
+
+    public GameObject projetil;
+
     void Start()
     {
         rigidBodyPersonagem = personagemControlado.GetComponent<Rigidbody2D>();
@@ -56,6 +61,13 @@ public class Player : MonoBehaviour
         }
 
 
+        //Atirar
+        if(Input.GetMouseButtonDown(0))
+        {
+            Atirar();
+        }
+
+
         crosshair.CrosshairSeguirMouse();
         Mover();
     }
@@ -81,5 +93,30 @@ public class Player : MonoBehaviour
 
         direcaoAndar = (horizontalNormal + verticalNormal) * velocidade;
         rigidBodyPersonagem.velocity = direcaoAndar;
+    }
+
+    private void Atirar() 
+    {
+        GameObject instance = Instantiate(projetil, personagemControlado.transform.position, Quaternion.identity);
+        Rigidbody2D projetilRb = instance.GetComponent<Rigidbody2D>();
+
+        Vector2 delta = new Vector2(crosshair.transform.position.x - personagemControlado.transform.position.x, crosshair.transform.position.y - personagemControlado.transform.position.y);
+
+        //Cálculo prático
+        float aimDist2 = Mathf.Sqrt(delta.x * delta.x + delta.y * delta.y);
+        Vector2 norm = new Vector2(delta.x / aimDist2, delta.y / aimDist2);
+
+        //A maneira simples
+        //float distanciaMira = Vector2.Distance(personagemControlado.transform.position, crosshair.transform.position);
+        //Vector2 norm2 = new Vector2(delta.x / distanciaMira, delta.y / distanciaMira);
+
+        //O mais simples
+        //Vector2 normal = delta.normalized;
+
+        Debug.DrawLine(personagemControlado.transform.position, crosshair.transform.position, Color.green, 2f);
+        Debug.DrawRay(personagemControlado.transform.position, norm, Color.cyan, 2f);
+        //Debug.Log("Dist: " + distanciaMira + " Normal:" + norm);
+
+        projetilRb.velocity = norm;
     }
 }
