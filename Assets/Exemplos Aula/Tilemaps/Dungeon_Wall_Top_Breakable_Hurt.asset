@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dungeon_Wall_Top_Breakable_Hurt
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 1176576263, guid: 8f8641638f031c44f9ab9292dee6bcff, type: 3}
-  m_Color: {r: 1, g: 0.873534, b: 0.82452834, a: 1}
+  m_Color: {r: 1, g: 0.8215382, b: 0.7773585, a: 1}
   m_Transform:
     e00: 1
     e01: 0
